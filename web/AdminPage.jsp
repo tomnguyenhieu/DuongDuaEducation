@@ -12,7 +12,7 @@
         <title>Admin Page</title>
     </head>
     <body>
-        <h1>Hello Admin!123</h1>
+        <h1>Hello Admin!</h1>
         <form action="LogoutController" method="POST">
             <button type="submit">Logout</button>
         </form>
