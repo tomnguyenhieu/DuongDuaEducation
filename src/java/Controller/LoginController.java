@@ -80,6 +80,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String rememberMe = request.getParameter("remember-me");
         Accounts accounts = new Accounts();
         ResultSet login = null;
         
@@ -99,6 +100,8 @@ public class LoginController extends HttpServlet {
             if (check > 0) {
                 HttpSession session = request.getSession();
                 session.setAttribute("id", accountID);
+                session.setAttribute("accountRole", accountRole);
+                session.setAttribute("rememberMe", rememberMe);
                 
                 switch(accountRole){
                     case(1):
