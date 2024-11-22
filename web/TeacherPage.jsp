@@ -13,5 +13,8 @@
     </head>
     <body>
         <h1>Hello Teacher!</h1>
+        <form action="LogoutController" method="POST">
+            <button type="submit">Logout</button>
+        </form>
     </body>
 </html>
