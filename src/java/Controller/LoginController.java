@@ -4,13 +4,20 @@
  */
 package Controller;
 
+import Model.Accounts;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,7 +78,50 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        Accounts accounts = new Accounts();
+        ResultSet login = null;
+        
+        login = accounts.login(email, password);
+        int check = 0;
+        int accountID = 0;
+        int accountRole = 0;
+        try {
+            while (login.next()) {
+                check++;
+                accountID = login.getInt("id");
+                accountRole = login.getInt("role");
+            }
+            System.out.println("UserId: " + accountID);
+            System.out.println("UserRole: " + accountRole);
+            
+            if (check > 0) {
+                HttpSession session = request.getSession();
+                session.setAttribute("id", accountID);
+                
+                switch(accountRole){
+                    case(1):
+                        response.sendRedirect("AdminPage.jsp");
+                        return;
+                    case(2):
+                        response.sendRedirect("TeacherPage.jsp");
+                        return;
+                    case(3):
+                        response.sendRedirect("StaffPage.jsp");
+                        return;
+                    case(4):
+                        response.sendRedirect("StudentPage.jsp");
+                        return;
+                }
+            }
+            response.sendRedirect("LoginPage.jsp");
+            return;
+        } catch (Exception e) {
+            System.out.println(e);
+            response.sendRedirect("LoginPage.jsp");
+            return;
+        }
     }
 
     /**
