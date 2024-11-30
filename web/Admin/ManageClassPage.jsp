@@ -12,6 +12,6 @@
         <title>Manage Class Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>This is Classes Manager Page!</h1>
     </body>
 </html>

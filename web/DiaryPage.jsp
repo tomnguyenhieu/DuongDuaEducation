@@ -12,6 +12,12 @@
         <title>Diary Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>This is Diary Page!</h1>
+        <form action="UploadController" method="POST" enctype="multipart/form-data">
+            <input name="file" type="file" >
+            <br>
+            <br>
+            <button type="submit">Submit</button>
+        </form>
     </body>
 </html>
